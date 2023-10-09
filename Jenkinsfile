@@ -1,18 +1,12 @@
-  stages {
-        stage('Checkout') {
-            steps {
-                // Git
-                script {
-                    //  Git checkout
-                    checkout([$class: 'GitSCM', branches: [[name: '*/main']], userRemoteConfigs: [[url: 'https://github.com/Abhireddi1289/abhi']]])
-                }
-            }
-        }
-
-        stage('Build Project') {
+pipeline {
+  agent any
+  tools{
+    stages{
+        stage('Build maven') 
             steps {
                 checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Abhireddi1289/abi2']])
                     sh 'mvn clean package'
+                  }
                 }
             }
         }
