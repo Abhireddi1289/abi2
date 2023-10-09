@@ -15,8 +15,8 @@ pipeline {
                         userRemoteConfigs: [[url: gitRepoUrl]]
                     ])
 
-                    // Copy the Abhifile to the workspace
-                    sh "cp Abhifile \${WORKSPACE}/Abhifile"
+                    // Copy the  to the workspace
+                    sh "cp Dockerfile \${WORKSPACE}/dockerfile"
                 }
             }
         }
