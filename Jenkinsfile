@@ -11,9 +11,7 @@
 
         stage('Build Project') {
             steps {
-                // Build your project
-                script {
-                    // Example: Use a build using maven
+                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Abhireddi1289/abi2']])
                     sh 'mvn clean package'
                 }
             }
