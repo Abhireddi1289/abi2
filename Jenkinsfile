@@ -31,7 +31,7 @@ pipeline {
         stage('Push to Docker Hub') {
             steps {
                 // Log in to Docker Hub and push the image
-                sh "docker login -u abhireddi1289 -p 9700@Abhi!"
+                sh "docker login -u abhireddi1289 -p 9700@Abhi"
                 sh "docker push abhireddi1289/my-docker-image:latest"
 
             }
