@@ -1,37 +1,49 @@
 pipeline {
-  agent any
-  tools{
-    stages{
-        stage('Build maven') 
-            steps {
-                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Abhireddi1289/abi2']])
-                    sh 'mvn clean package'
-                  }
-                }
-            }
-        }
+    agent any
 
-        stage('Build Docker Image') {
+    stages {
+        stage('Checkout') {
             steps {
-                // Build a Docker image
                 script {
-                    // Example: Build a Docker image from a Dockerfile
-                    sh 'docker build -t Abhi12:latest .'
+                    // Define the URL of the Git repository and branch
+                    def gitRepoUrl = 'https://github.com/Abhireddi1289/abi2'
+                    def gitBranch = 'main' // Replace with the desired branch name
+
+                    // Checkout the Git repository
+                    checkout([$class: 'GitSCM',
+                        branches: [[name: gitBranch]],
+                        userRemoteConfigs: [[url: gitRepoUrl]]
+                    ])
+
+                    // Copy the Abhifile to the workspace
+                    sh "cp Abhifile \${WORKSPACE}/Abhifile"
                 }
             }
         }
 
-        stage('Push Docker Image') {
+        stage('Build') {
             steps {
-                // Push the Docker image to a Docker registry 
-                script {
-                    withCredentials([usernamePassword(credentialsId: 'abhireddi1289', usernameVariable: 'DOCKER_abhilashreddi1289', passwordVariable: 'DOCKER_9700@Abhi')]) {
-                        sh 'docker login -u $DOCKER_abhireddi1289 -p $DOCKER_9700@Abhi'
-                        sh 'docker push abhireddi1289/Abhi12:latest'  
-                    }
-                }
+                // Build the Docker image
+                sh "docker build -t abhireddi1289/my-docker-image \${WORKSPACE}"
             }
         }
-    
 
-   
+        stage('Push to Docker Hub') {
+            steps {
+                // Log in to Docker Hub and push the image
+                sh "docker login -u abhireddi1289 -p 9700@Abhi!"
+                sh "docker push abhireddi1289/my-docker-image:latest"
+
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Build and deployment successful!'
+        }
+        failure {
+            echo 'Build failed!'
+        }
+    }
+}
