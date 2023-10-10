@@ -1,42 +1,49 @@
 pipeline {
     agent any
 
-    environment {
-        DOCKERHUB_CREDENTIALS = credentials('dockerhub')
-        IMAGE_NAME = "Devxpace"
-        VERSION = "1.0"
-        FULL_IMAGE_NAME = "${DOCKERHUB_CREDENTIALS_USR}/${IMAGE_NAME}:${VERSION}"
-    }
-}
     stages {
+        stage('Checkout') {
+            steps {
+                script {
+                    // Define the URL of the Git repository and branch
+                    def gitRepoUrl = 'https://github.com/Abhireddi1289/abi2'
+                    def gitBranch = 'main' // Replace with the desired branch name
+
+                    // Checkout the Git repository
+                    checkout([$class: 'GitSCM',
+                        branches: [[name: gitBranch]],
+                        userRemoteConfigs: [[url: gitRepoUrl]]
+                    ])
+
+                    // Copy the  to the workspace
+                    sh "cp Dockerfile \${WORKSPACE}/dockerfile"
+                }
+            }
+        }
+
         stage('Build') {
             steps {
-                    sh 'sudo docker build -t $FULL_IMAGE_NAME docker/app2/'
-                }
+                // Build the Docker image
+                sh "docker build -t abhireddi1289/my-docker-image \${WORKSPACE}"
             }
         }
-        stage('Login') {
+
+        stage('Push to Docker Hub') {
             steps {
-                    script {
-                        withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKERHUB_USERNAME', passwordVariable: 'DOCKERHUB_PASSWORD')]) {
-                            sh "docker login -u abhireddi1289 -p 9700@Abhi"
-                    }
-                }
+                // Log in to Docker Hub and push the image
+                sh "docker login -u abhireddi1289 -p 9700@Abhi"
+                sh "docker push abhireddi1289/my-docker-image:latest"
+
             }
         }
-        stage('Push') {
-            steps {
-                    sh 'docker push $FULL_IMAGE_NAME'
-                }
-            }
-        stage('Remove') {
-            steps {
-                    sh 'docker rmi $FULL_IMAGE_NAME'
-                }
-            }
-    
+    }
+
     post {
-        always {
-                sh 'docker logout'
-            }
+        success {
+            echo 'Build and deployment successful!'
         }
+        failure {
+            echo 'Build failed!'
+        }
+    }
+}
