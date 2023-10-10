@@ -9,4 +9,4 @@ RUN npm install
 
 EXPOSE 5000
 
-ENTRYPOINT ["node", "Abhiworld.js"]
+ENTRYPOINT ["node", "Devxpace.js"]
