@@ -1,4 +1,4 @@
-pipeline {
+pipeline 
     agent any
 
     environment {
@@ -20,7 +20,6 @@ pipeline {
                     script {
                         withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKERHUB_USERNAME', passwordVariable: 'DOCKERHUB_PASSWORD')]) {
                             sh "docker login -u abhireddi1289 -p 9700@Abhi"
-                        }
                     }
                 }
             }
@@ -35,8 +34,7 @@ pipeline {
                     sh 'docker rmi $FULL_IMAGE_NAME'
                 }
             }
-    }
-
+    
     post {
         always {
                 sh 'docker logout'
