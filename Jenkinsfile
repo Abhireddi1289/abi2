@@ -16,7 +16,7 @@ pipeline {
                     ])
 
                     // Copy the  to the workspace
-                    sh "cp Dockerfile \${WORKSPACE}/dockerfile"
+                    sh "cp Dockerfile \${WORKSPACE}/docker"
                 }
             }
         }
