@@ -1,4 +1,4 @@
-pipeline 
+pipeline {
     agent any
 
     environment {
@@ -7,7 +7,7 @@ pipeline
         VERSION = "1.0"
         FULL_IMAGE_NAME = "${DOCKERHUB_CREDENTIALS_USR}/${IMAGE_NAME}:${VERSION}"
     }
-
+}
     stages {
         stage('Build') {
             steps {
