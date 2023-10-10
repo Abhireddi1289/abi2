@@ -30,7 +30,6 @@ pipeline {
                     sh 'docker push $FULL_IMAGE_NAME'
                 }
             }
-        }
         stage('Remove') {
             steps {
                     sh 'docker rmi $FULL_IMAGE_NAME'
