@@ -7,4 +7,6 @@ COPY Devxpace.js abhireddi1289/abhi
 
 EXPOSE 5000
 
+RUN npm install
+
 ENTRYPOINT ["node", "Devxpace.js"]
