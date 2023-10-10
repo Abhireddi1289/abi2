@@ -35,7 +35,6 @@ pipeline {
                     sh 'docker rmi $FULL_IMAGE_NAME'
                 }
             }
-        }
     }
 
     post {
@@ -43,5 +42,3 @@ pipeline {
                 sh 'docker logout'
             }
         }
-    }
-}
