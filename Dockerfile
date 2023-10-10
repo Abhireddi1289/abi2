@@ -1,6 +1,6 @@
 FROM node:20-alpine
 
-WORKDIR /Abhi/app/
+WORKDIR /Abhi2/app/
 
 COPY package.json
 COPY Devxpace.js
