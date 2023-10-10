@@ -2,8 +2,8 @@ FROM node:20-alpine
 
 WORKDIR /Abhi/app/
 
-COPY package.json .
-COPY Abhiworld.js .
+COPY package.json
+COPY Devxpace.js
 
 RUN npm install
 
