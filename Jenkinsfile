@@ -24,7 +24,7 @@ pipeline {
         stage('Build') {
             steps {
                 // Build the Docker image
-                sh "docker build -t abhireddi1289/my-docker-image\${WORKSPACE}"
+                sh "docker build -t abhireddi1289/my-docker-image\"
             }
         }
 
