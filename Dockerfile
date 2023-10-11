@@ -3,10 +3,10 @@ FROM node:20-alpine
 WORKDIR /Abhi/app/
 
 COPY package.json .
-COPY Abhiworld.js .
+COPY Devxpace.js .
 
 RUN npm install
 
 EXPOSE 3000
 
-ENTRYPOINT ["node", "Abhiworld.js"]
+ENTRYPOINT ["node", "Devxpace.js"]
