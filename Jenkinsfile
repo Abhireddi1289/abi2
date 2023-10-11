@@ -24,7 +24,7 @@ pipeline {
         stage('Build') {
             steps {
                 // Build the Docker image
-                sh "docker build -t abhireddi1289/my-docker-image \${WORKSPACE}"
+                sh "docker build -t abhireddi1289/my-docker \${WORKSPACE}"
             }
         }
 
@@ -32,7 +32,7 @@ pipeline {
             steps {
                 // Log in to Docker Hub and push the image
                 sh "docker login -u abhireddi1289 -p 9700@Abhi"
-                sh "docker push abhireddi1289/my-docker-image:latest"
+                sh "docker push abhireddi1289/my-docker:latest"
 
             }
         }
